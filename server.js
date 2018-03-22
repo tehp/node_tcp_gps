@@ -22,12 +22,6 @@ var point = function(x, y) {
 
 var clients = [];
 
-for (var i = 0; i < 8; i++) {
-  clients[i] = client("name", point(0, 0), 0);
-}
-
-var current_clients = 0;
-
 var server = net.createServer();
 server.on('connection', handle_connection);
 
@@ -45,7 +39,8 @@ function handle_connection(connection) {
   connection.once('close', onConnClose);
   connection.on('error', onConnError);
 
-  clients[current_clients] = client(0, point(0, 0), connection.remoteAddress);
+  clients[connection.remoteAddress] = client("name", point(0, 0), connection.remoteAddress);
+  console.log(clients[connection.remoteAddress]);
 
   function onConnData(d) {
     console.log("-----------------------");
@@ -62,12 +57,11 @@ function handle_connection(connection) {
 
     log("-> " + name + " x:" + client_x + " y:" + client_y);
 
-    clients[current_clients].name = name;
-    clients[current_clients].point.x = client_x;
-    clients[current_clients].point.y = client_y;
+    clients[connection.remoteAddress].name = name;
+    clients[connection.remoteAddress].point.x = client_x;
+    clients[connection.remoteAddress].point.y = client_y;
 
-    // clients[current_clients].point = point(" " + d, 0);
-    print_all_clients();
+    console.log(clients);
     connection.write(d);
   }
 
@@ -86,14 +80,6 @@ function log(msg) {
   console.log("[ " + timestamp('MM-DD hh:mm:ss', now) + " ] " + msg);
 }
 
-function print_all_clients() {
-  for (var i = 0; i < 8; i++) {
-    if (clients[i].name != "name") {
-      log(JSON.stringify(clients[i]));
-    }
-  }
-}
-
 app.set('views', __dirname + '/views');
 
 app.set('view engine', 'pug');
@@ -103,15 +89,9 @@ app.get('/', function(req, res) {
 });
 
 app.get('/json', function(req, res) {
-  console.log(clients);
   res.json({
-    x: clients[0].point.x,
-    y: clients[0].point.y
+    clients: clients
   })
 });
-
-function test() {
-  console.log("test");
-}
 
 app.listen(8080);
