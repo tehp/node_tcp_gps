@@ -2,6 +2,7 @@ var net = require('net');
 var timestamp = require('console-timestamp');
 var express = require('express');
 var path = require('path');
+var pug = require('pug');
 var app = express();
 
 var client = function(name, point, ip) {
@@ -27,14 +28,13 @@ for (var i = 0; i < 8; i++) {
 
 var current_clients = 0;
 
-print_all_clients();
-
 var server = net.createServer();
 server.on('connection', handle_connection);
 
 server.listen(9000, function() {
   log('server listening to: ' + JSON.stringify(server.address()));
 });
+
 
 function handle_connection(connection) {
 
@@ -45,15 +45,29 @@ function handle_connection(connection) {
   connection.once('close', onConnClose);
   connection.on('error', onConnError);
 
-  clients[current_clients] = client("unnamed client", point(0, 0), connection.remoteAddress);
-  print_all_clients();
+  clients[current_clients] = client(0, point(0, 0), connection.remoteAddress);
 
   function onConnData(d) {
-    log("received data: ");
+    console.log("-----------------------");
     log('Address: ' + remoteAddress);
     log('Data: ' + d);
+    console.log("-----------------------");
+
+    var data = "" + d;
+    var message = data.split("_");
+
+    var name = message[0];
+    var client_x = message[1];
+    var client_y = message[2];
+
+    log("-> " + name + " x:" + client_x + " y:" + client_y);
+
+    clients[current_clients].name = name;
+    clients[current_clients].point.x = client_x;
+    clients[current_clients].point.y = client_y;
+
     // clients[current_clients].point = point(" " + d, 0);
-    // print_all_clients();
+    print_all_clients();
     connection.write(d);
   }
 
@@ -69,17 +83,35 @@ function handle_connection(connection) {
 
 function log(msg) {
   var now = new Date();
-  console.log("[ " + timestamp('MM-DD hh:mm', now) + " ] " + msg);
+  console.log("[ " + timestamp('MM-DD hh:mm:ss', now) + " ] " + msg);
 }
 
 function print_all_clients() {
   for (var i = 0; i < 8; i++) {
-    log(JSON.stringify(clients[i]));
+    if (clients[i].name != "name") {
+      log(JSON.stringify(clients[i]));
+    }
   }
 }
 
+app.set('views', __dirname + '/views');
+
+app.set('view engine', 'pug');
+
 app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname + '/views/index.html'));
+  res.render("index");
 });
+
+app.get('/json', function(req, res) {
+  console.log(clients);
+  res.json({
+    x: clients[0].point.x,
+    y: clients[0].point.y
+  })
+});
+
+function test() {
+  console.log("test");
+}
 
 app.listen(8080);
