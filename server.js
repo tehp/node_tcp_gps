@@ -5,6 +5,8 @@ var path = require('path');
 var pug = require('pug');
 var app = express();
 
+var clients = {};
+
 var client = function(name, point, ip) {
   return {
     "name": name,
@@ -20,8 +22,6 @@ var point = function(x, y) {
   };
 };
 
-var clients = [];
-
 var server = net.createServer();
 server.on('connection', handle_connection);
 
@@ -35,18 +35,16 @@ function handle_connection(connection) {
   var remoteAddress = connection.remoteAddress + ':' + connection.remotePort;
   log('new client connection from: ' + remoteAddress);
 
-  connection.on('data', onConnData);
-  connection.once('close', onConnClose);
-  connection.on('error', onConnError);
+  connection.on('data', on_connection);
+  connection.once('close', on_close);
+  connection.on('error', on_error);
 
   clients[connection.remoteAddress] = client("name", point(0, 0), connection.remoteAddress);
   console.log(clients[connection.remoteAddress]);
 
-  function onConnData(d) {
-    console.log("-----------------------");
+  function on_connection(d) {
     log('Address: ' + remoteAddress);
     log('Data: ' + d);
-    console.log("-----------------------");
 
     var data = "" + d;
     var message = data.split("_");
@@ -65,11 +63,11 @@ function handle_connection(connection) {
     connection.write(d);
   }
 
-  function onConnClose() {
+  function on_close() {
     log('connection closed: ' + remoteAddress);
   }
 
-  function onConnError(err) {
+  function on_error(err) {
     log('err' + remoteAddress + " " + err.message);
   }
 
@@ -81,6 +79,7 @@ function log(msg) {
 }
 
 app.set('views', __dirname + '/views');
+app.use(express.static('public'));
 
 app.set('view engine', 'pug');
 
@@ -90,7 +89,7 @@ app.get('/', function(req, res) {
 
 app.get('/json', function(req, res) {
   res.json({
-    clients: clients
+    clients
   })
 });
 
