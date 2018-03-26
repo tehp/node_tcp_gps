@@ -36,7 +36,7 @@ function loop() {
   deleteMarkers();
   var Httpreq = new XMLHttpRequest();
 
-  Httpreq.open("GET", "http://localhost:8080/json", false);
+  Httpreq.open("GET", "http://http://159.65.109.194/json", false);
   Httpreq.send(null);
 
   json = JSON.parse(Httpreq.responseText);
