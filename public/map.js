@@ -199,6 +199,8 @@ function loop() {
 
   json = JSON.parse(Httpreq.responseText);
 
+  deleteMarkers();
+
   for (i in json) { // i bet this is incredibly inneficient for weird key dictionaries.
     for (j in json[i]) {
 
@@ -236,9 +238,10 @@ function loop() {
       marker.setPosition(lat_lon);
     }
   }
-  deleteMarkers();
+
   setMapOnAll(map);
   showMarkers();
+
 }
 
 

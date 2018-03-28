@@ -43,6 +43,7 @@ function handle_connection(connection) {
   console.log(clients[connection.remoteAddress]);
 
   function on_connection(d) {
+
     log('Address: ' + remoteAddress);
     log('Data: ' + d);
 
