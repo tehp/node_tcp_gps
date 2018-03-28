@@ -192,7 +192,6 @@ setInterval(loop, 1000);
 
 function loop() {
 
-  deleteMarkers();
   var Httpreq = new XMLHttpRequest();
 
   Httpreq.open("GET", "http://159.65.109.194/json", false);
@@ -237,6 +236,7 @@ function loop() {
       marker.setPosition(lat_lon);
     }
   }
+  deleteMarkers();
   setMapOnAll(map);
   showMarkers();
 }
