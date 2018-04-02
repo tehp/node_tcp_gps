@@ -90,7 +90,7 @@ app.get('/', function(req, res) {
 
 app.get('/json', function(req, res) {
 
-  var password = req.body.password || req.query.password;
+  var password = req.query.password;
 
   if (password == "asdf") {
     res.json({
