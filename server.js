@@ -89,9 +89,19 @@ app.get('/', function(req, res) {
 });
 
 app.get('/json', function(req, res) {
-  res.json({
-    clients
-  })
+
+  var password = req.body.password || req.query.password;
+
+  if (password == "asdf") {
+    res.json({
+      clients
+    })
+  } else {
+    return res.status(403).send({
+      success: false,
+      message: 'Invalid password'
+    });
+  }
 });
 
 app.listen(8080);

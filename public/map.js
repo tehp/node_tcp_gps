@@ -179,13 +179,7 @@ function initMap() {
   };
 
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
-  // marker = new google.maps.Marker({
-  //   position: {
-  //     lat: x,
-  //     lng: y
-  //   },
-  //   map: map
-  // });
+
 }
 
 setInterval(loop, 1000);
@@ -194,7 +188,7 @@ function loop() {
 
   var Httpreq = new XMLHttpRequest();
 
-  Httpreq.open("GET", "http://159.65.109.194/json", false);
+  Httpreq.open("GET", "http://159.65.109.194/json?password=asdf", false);
   Httpreq.send(null);
 
   json = JSON.parse(Httpreq.responseText);
@@ -236,6 +230,7 @@ function loop() {
 
       var lat_lon = new google.maps.LatLng(x, y); // mac_49.249889599999996_-123.00167519999998_
       marker.setPosition(lat_lon);
+
     }
   }
 
