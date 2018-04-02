@@ -5,6 +5,8 @@ var name;
 var markers = [];
 var map;
 
+var password = prompt("what is the password?", "password");
+
 function clearOverlays() {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(null);
@@ -188,7 +190,7 @@ function loop() {
 
   var Httpreq = new XMLHttpRequest();
 
-  Httpreq.open("GET", "http://159.65.109.194/json?password=asdf", false);
+  Httpreq.open("GET", "http://159.65.109.194/json?password=" + password, false);
   Httpreq.send(null);
 
   json = JSON.parse(Httpreq.responseText);
