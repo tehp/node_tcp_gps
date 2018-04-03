@@ -65,7 +65,7 @@ function handle_connection(connection) {
   }
 
   function on_close() {
-    log('connection closed: ' + remoteAddress);
+    delete clients[connection.remoteAddress];
   }
 
   function on_error(err) {
