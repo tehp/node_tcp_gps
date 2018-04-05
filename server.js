@@ -58,6 +58,8 @@ function handle_connection(connection) {
 
       log("-> " + name + " x:" + client_x + " y:" + client_y);
 
+      log("─────────────────────────────────────");
+
       clients[connection.remoteAddress].name = name;
       clients[connection.remoteAddress].point.x = client_x;
       clients[connection.remoteAddress].point.y = client_y;
