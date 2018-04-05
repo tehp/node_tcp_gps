@@ -60,7 +60,6 @@ function handle_connection(connection) {
     clients[connection.remoteAddress].point.x = client_x;
     clients[connection.remoteAddress].point.y = client_y;
 
-    console.log(clients);
     connection.write(d);
   }
 
