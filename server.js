@@ -44,27 +44,27 @@ function handle_connection(connection) {
 
   function on_data(d) {
 
-    if (d = " ") {
-      return;
+    if (d != " ") {
+
+      log('Address: ' + remoteAddress);
+      log('Data: ' + d);
+
+      var data = "" + d;
+      var message = data.split("_");
+
+      var name = message[0];
+      var client_x = message[1];
+      var client_y = message[2];
+
+      log("-> " + name + " x:" + client_x + " y:" + client_y);
+
+      clients[connection.remoteAddress].name = name;
+      clients[connection.remoteAddress].point.x = client_x;
+      clients[connection.remoteAddress].point.y = client_y;
+
+      connection.write(d);
+
     }
-
-    log('Address: ' + remoteAddress);
-    log('Data: ' + d);
-
-    var data = "" + d;
-    var message = data.split("_");
-
-    var name = message[0];
-    var client_x = message[1];
-    var client_y = message[2];
-
-    log("-> " + name + " x:" + client_x + " y:" + client_y);
-
-    clients[connection.remoteAddress].name = name;
-    clients[connection.remoteAddress].point.x = client_x;
-    clients[connection.remoteAddress].point.y = client_y;
-
-    connection.write(d);
   }
 
   function on_close() {
