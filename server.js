@@ -35,14 +35,18 @@ function handle_connection(connection) {
   var remoteAddress = connection.remoteAddress + ':' + connection.remotePort;
   log('new client connection from: ' + remoteAddress);
 
-  connection.on('data', on_connection);
+  connection.on('data', on_data);
   connection.once('close', on_close);
   connection.on('error', on_error);
 
   clients[connection.remoteAddress] = client("name", point(0, 0), connection.remoteAddress);
   console.log(clients[connection.remoteAddress]);
 
-  function on_connection(d) {
+  function on_data(d) {
+
+    if (d = " ") {
+      return;
+    }
 
     log('Address: ' + remoteAddress);
     log('Data: ' + d);
