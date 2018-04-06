@@ -29,7 +29,6 @@ server.listen(9000, function() {
   log('server listening to: ' + JSON.stringify(server.address()));
 });
 
-
 function handle_connection(connection) {
 
   var remoteAddress = connection.remoteAddress + ':' + connection.remotePort;
@@ -67,6 +66,7 @@ function handle_connection(connection) {
       connection.write(d);
 
     }
+
   }
 
   function on_close() {
@@ -97,7 +97,7 @@ app.get('/json', function(req, res) {
 
   var password = req.query.password;
 
-  if (password == "asdf") {
+  if (password == "4815162342") {
     res.json({
       clients
     })
