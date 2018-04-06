@@ -10,7 +10,7 @@
 --
 -- REVISIONS: (Date and Description)
 --
--- DESIGNER: Mackenzie Craig
+-- DESIGNER: Mackenzie Craig & Haley Booker
 --
 -- PROGRAMMER: Mackenzie Craig
 --
@@ -58,9 +58,9 @@ server.listen(9000, function() {
 --
 -- REVISIONS: (Date and Description)
 --
--- DESIGNER: Mackenzie Craig
+-- DESIGNER: Mackenzie Craig & Haley Booker
 --
--- PROGRAMMER: Mackenzie Craig
+-- PROGRAMMER: Mackenzie Craig & Haley Booker
 --
 -- INTERFACE: function handle_connection(connection)
 --

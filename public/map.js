@@ -186,6 +186,25 @@ function initMap() {
 
 setInterval(loop, 1000);
 
+/*------------------------------------------------------------------------------------------------------------------
+-- FUNCTION: loop
+--
+-- DATE: April 5, 2018
+--
+-- REVISIONS: (Date and Description)
+--
+-- DESIGNER: Mackenzie Craig & Haley Booker
+--
+-- PROGRAMMER: Mackenzie Craig & Haley Booker
+--
+-- INTERFACE: function loop()
+--
+-- RETURNS: N/A
+--
+-- NOTES:
+-- This function pulls the dictionary of clients from the json endpoint and loops through each client, drawing
+-- a marker for them and adding it to the map.
+----------------------------------------------------------------------------------------------------------------------*/
 function loop() {
 
   var Httpreq = new XMLHttpRequest();
