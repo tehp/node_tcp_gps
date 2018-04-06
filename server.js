@@ -1,3 +1,25 @@
+/*------------------------------------------------------------------------------------------------------------------
+-- SOURCE FILE: server.js
+--
+-- PROGRAM: tracker
+--
+-- FUNCTIONS:
+-- handle_connection()
+--
+-- DATE: April 5, 2018
+--
+-- REVISIONS: (Date and Description)
+--
+-- DESIGNER: Mackenzie Craig
+--
+-- PROGRAMMER: Mackenzie Craig
+--
+-- NOTES:
+-- This program is a server written in NodeJS. The program servers an endpoint using express that provides a dictionary
+-- of connected android clients who are reporting their coordinates periodically through TCP sockets. The dictionary
+-- is used in a view which maps the clients on a google maps page that is updated each second.
+----------------------------------------------------------------------------------------------------------------------*/
+
 var net = require('net');
 var timestamp = require('console-timestamp');
 var express = require('express');
@@ -29,6 +51,25 @@ server.listen(9000, function() {
   log('server listening to: ' + JSON.stringify(server.address()));
 });
 
+/*------------------------------------------------------------------------------------------------------------------
+-- FUNCTION: handle_connection
+--
+-- DATE: April 5, 2018
+--
+-- REVISIONS: (Date and Description)
+--
+-- DESIGNER: Mackenzie Craig
+--
+-- PROGRAMMER: Mackenzie Craig
+--
+-- INTERFACE: function handle_connection(connection)
+--
+-- RETURNS: N/A
+--
+-- NOTES:
+-- This function is called once per connection made to the server from a client, and runs until that client disconnects.
+-- The function handles the creation of the connection and the reading and using of the clients messages.
+----------------------------------------------------------------------------------------------------------------------*/
 function handle_connection(connection) {
 
   var remoteAddress = connection.remoteAddress + ':' + connection.remotePort;
